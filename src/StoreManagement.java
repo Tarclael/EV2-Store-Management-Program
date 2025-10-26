@@ -7,8 +7,7 @@ public class StoreManagement {
     private static ArrayList<Inventory> inventories = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) throws Exception {
-        int option = 0, productAmount = 0, num = 0;
-        boolean isValid;
+        int option = 0, productAmount = 0;
 
         do{
             /*
