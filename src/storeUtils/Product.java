@@ -65,8 +65,6 @@ public class Product {
         System.out.println("Price              : $" + getPrice());
         System.out.println("Inventory location : " + inventory.getInventoryLocation());
         System.out.println("Supplier           : ");
-        System.out.print("Press 'Enter' to continue...");
-        scanner.nextLine();
     }
     
     public void changeProductID(int newId){

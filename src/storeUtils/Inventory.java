@@ -62,14 +62,14 @@ public class Inventory {
         System.out.println("location" + getInventoryLocation());
         System.out.println("Current capacity" + currentCapacity + " of " + maxCapacity);
         System.out.println("Total value" + getTotalValue());
-        System.out.println("Status" + getInventoryStatus());
-        System.out.print("Press 'Enter' to continue...");
-        scanner.nextLine();
     }
     
     public void showAllInventoryProduct(){
         for(Product product : products){
             product.showInfo();
+            System.out.println("Status" + getInventoryStatus());
+            System.out.print("Press 'Enter' to continue...");
+            scanner.nextLine();
         }
     }
     
