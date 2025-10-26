@@ -57,14 +57,26 @@ public class Inventory {
     /*
      * methods
      */
-    public void showInventoryInfo(){
-        System.out.println();
+    public void showInfo(){
+        System.out.println("ID" + getInventoryId());
+        System.out.println("location" + getInventoryLocation());
+        System.out.println("Current capacity" + currentCapacity + " of " + maxCapacity);
+        System.out.println("Total value" + getTotalValue());
+        System.out.println("Status" + getInventoryStatus());
+        System.out.print("Press 'Enter' to continue...");
+        scanner.nextLine();
     }
-
+    
+    public void showAllInventoryProduct(){
+        for(Product product : products){
+            product.showInfo();
+        }
+    }
+    
     public void updateTotalValue(){
         currentCapacity = 0;
         totalValue = 0;
-
+        
         for(Product product : products){
             if(currentCapacity + product.getQuantity() <= maxCapacity){
                 currentCapacity += product.getQuantity();
@@ -72,18 +84,26 @@ public class Inventory {
             }else{
                 setInventoryStatus(Status.Full);
                 System.out.println("Inventory " + getInventoryId() + " is full.");
+                System.out.print("Press 'Enter' to continue...");
+                scanner.nextLine();
                 break;
             }
         }
     }
-
+    
     public void addProduct(Product product){
         products.add(product);
         updateTotalValue();
+        System.out.println("Product added to inventory " + getInventoryId());
+        System.out.print("Press 'Enter' to continue...");
+        scanner.nextLine();
     }
-
+    
     public void removeProduct(Product product){
-        products.add(product);
+        products.remove(product);
         updateTotalValue();
+        System.out.println("Product removed from inventory " + getInventoryId());
+        System.out.print("Press 'Enter' to continue...");
+        scanner.nextLine();
     }
 }

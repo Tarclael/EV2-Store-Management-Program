@@ -58,7 +58,7 @@ public class Product {
     /*
      * methods
      */
-    public void showProductInfo(){
+    public void showInfo(){
         System.out.println("ID                 : " + getProductId());
         System.out.println("Name               : " + getProductName());
         System.out.println("Quantity           : " + getQuantity());
