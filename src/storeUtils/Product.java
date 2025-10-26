@@ -1,8 +1,9 @@
 package storeUtils;
 
 import java.util.Scanner;
+
 public class Product {
-    private int productID, qty;
+    private int productId, qty;
     private String productName;
     private double price;
     private Supplier supplier;
@@ -14,10 +15,10 @@ public class Product {
      * constructors
      */
     // no parameter
-    public Product(){this(0, "", 0, 0, null, null);}
+    public Product(){this(0, null, 0, 0, null, null);}
     // all parameter
-    public Product(int productID, String productName, int quantity, double price, Supplier supplier, Inventory inventory){
-        this.productID = productID;
+    public Product(int productId, String productName, int quantity, double price, Supplier supplier, Inventory inventory){
+        this.productId = productId;
         this.productName = productName;
         this.qty = quantity;
         this.price = price;
@@ -31,8 +32,8 @@ public class Product {
      * setter & getter
      */
     // product id
-    public void setProductId(int productID){this.productID = productID;}
-    public int getProductId(){return productID;}
+    public void setProductId(int productId){this.productId = productId;}
+    public int getProductId(){return productId;}
 
     // product name
     public void setProductName(String productName){this.productName = productName;}
@@ -58,7 +59,7 @@ public class Product {
      * methods
      */
     public void showProductInfo(){
-        System.out.println("Product ID         : " + getProductId());
+        System.out.println("ID                 : " + getProductId());
         System.out.println("Name               : " + getProductName());
         System.out.println("Quantity           : " + getQuantity());
         System.out.println("Price              : $" + getPrice());
@@ -68,9 +69,9 @@ public class Product {
         scanner.nextLine();
     }
     
-    public void changeProductID(int newID){
-        System.out.println("Product ID has been changed from " + getProductId() + " to " + newID);
-        this.productID = newID;
+    public void changeProductID(int newId){
+        System.out.println("Product ID has been changed from " + getProductId() + " to " + newId);
+        this.productId = newId;
         System.out.print("Press 'Enter' to continue...");
         scanner.nextLine();
     }
