@@ -63,7 +63,7 @@ public class Product {
         System.out.println("Name               : " + getProductName());
         System.out.println("Quantity           : " + getQuantity());
         System.out.println("Price              : $" + getPrice());
-        System.out.println("Inventory location : ");
+        System.out.println("Inventory location : " + inventory.getInventoryLocation());
         System.out.println("Supplier           : ");
         System.out.print("Press 'Enter' to continue...");
         scanner.nextLine();

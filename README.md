@@ -17,16 +17,17 @@
 	6. Return to Main Menu
 2. Manage inventory
 	1. See all inventory
-	2. Search by ID
-	3. Add inventory
-	4. Modify inventory
+    2. See all inventory product
+	3. Search by ID
+	4. Add inventory
+	5. Modify inventory
 		1. Change ID
 		2. Change location
 		3. Change capacity
 		4. Change status
 		5. Back
-	5. Remove inventory
-	6. Return to Main Menu
+	6. Remove inventory
+	7. Return to Main Menu
 3. Manage supplier
 	1. See all supplier
 	2. Search by name
