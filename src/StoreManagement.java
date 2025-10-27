@@ -44,11 +44,12 @@ public class StoreManagement {
                          * Manage product menu
                          */
                         switch(option){
-                            case 1:
+                            case 1: // display all Product objects
                                 System.out.println("\n---------- ALL PRODUCT ------------");
-                                if(products.size() < 1){
+                                if(products.size() < 1){ // if Product array is empty
                                     System.out.println("No products yet!");
                                 }
+                                // loop through each products element
                                 for(Product product : products){
                                     product.showInfo();
                                     System.out.println();
@@ -58,28 +59,29 @@ public class StoreManagement {
                                 System.out.print("Press 'Enter' to continue...");
                                 scanner.nextLine();
                                 break;
-                            case 2:
+                            case 2: // search Product object by name
                                 System.out.println("\n----- SEARCH PRODUCT by NAME ------");
-                                if(products.size() < 1){
+                                if(products.size() < 1){ // if Product array is empty
                                     System.out.println("No products yet!");
                                 }else{
                                     System.out.print("Enter product name: ");
-                                    String id = scanner.nextLine();
-                                    Product productFound = null;
-    
+                                    String name = scanner.nextLine();
+                                    Product productFound = null; // store found Product object
+                                    // loop through each products element
                                     for(Product product : products){
-                                        if(product.getProductName().equalsIgnoreCase(id)){
+                                        // if product name equals entered name
+                                        if(product.getProductName().equalsIgnoreCase(name)){
                                             productFound = product;
                                             break;
                                         }
                                     }
     
-                                    if (productFound == null) {
-                                        System.out.println("Product with name " + id + " not found.");
+                                    if(productFound == null){ // if product object not found
+                                        System.out.println("Product with name " + name + " not found.");
                                         System.out.print("Press 'Enter' to continue...");
                                         scanner.nextLine();
-                                    } else {
-                                        System.out.println("********* Reservation Found *********");
+                                    }else{ // if found
+                                        System.out.println("\n--------- PRODUCT FOUND ---------");
                                         productFound.showInfo();
                                     }
                                 }
@@ -87,14 +89,13 @@ public class StoreManagement {
                                 System.out.print("Press 'Enter' to continue...");
                                 scanner.nextLine();
                                 break;
-                            case 3:
+                            case 3: // add new product object
                                 System.out.println("\n--------- ADD NEW PRODUCT ---------");
                                 // enter amount of new product
                                 int productAmount = validNumberInput("How many new products? ", "New product must be at least 1! Please try again!", "Invalid input! Please try again!\n");
 
                                 for(int i = 0; i < productAmount; i++){
                                     Product product = new Product();
-                                    
                                     // set new product ID
                                     int productID = validNumberInput("Enter new product ID: ", "ID must be more than 1! Please try again!", "ID is number only! Please try again!", "Product ID already exist! Please enter a different one!");
                                     product.setProductId(productID);
@@ -132,12 +133,14 @@ public class StoreManagement {
                                     System.out.print("Enter valid inventory location: ");
                                     String inventory = scanner.nextLine();
 
+                                    // search if inventory exist
                                     for(Inventory existingInventory : inventories){
                                         if(existingInventory.getInventoryLocation().equalsIgnoreCase(inventory)){
                                             product.setInventory(existingInventory);
                                             break;
                                         }
                                     }
+
                                     System.out.println("\n----------- PRODUCT INFO ----------");
                                     product.showInfo();
                                     products.add(product);
@@ -146,7 +149,7 @@ public class StoreManagement {
                                     System.out.println();                              
                                 }
                                 break;
-                            case 4:
+                            case 4: // modify product info
                                 System.out.println("\n-------- MODIFY PRODUCT INFO ------");
                                 System.out.println("1. Change ID");
                                 System.out.println("2. Change Name");
@@ -158,11 +161,12 @@ public class StoreManagement {
                                 option = validMenuOption(1, 7);
 
                                 switch(option){
-                                    case 1:
+                                    case 1: // change product id
                                         System.out.println("\n-------- MODIFY PRODUCT INFO ------");
                                         System.out.println("\n------------- Change Id -----------");
-                                        Product productId = findProductById();
-                                        if(productId != null){
+                                        Product productId = findProductById(); // search product by id
+
+                                        if(productId != null){ // if product found
                                             int newId = validNumberInput(
                                                 "Enter new product ID: ",
                                                 "ID must be more than 1! Please try again!",
@@ -172,19 +176,21 @@ public class StoreManagement {
                                             productId.changeProductID(newId);
                                         }
                                         break;
-                                    case 2:
+                                    case 2: // change product name
                                         System.out.println("\n-------- MODIFY PRODUCT INFO ------");
                                         System.out.println("\n------------ Change Name ----------");
                                         Product productName = findProductById();
+
                                         if(productName != null){
                                             System.out.print("Enter new product name: ");
                                             productName.changeProductName(scanner.nextLine());
                                         }
                                         break;
-                                    case 3:
+                                    case 3: // change product price
                                         System.out.println("\n-------- MODIFY PRODUCT INFO ------");
                                         System.out.println("\n----------- Change Price ----------");
                                         Product productPrice = findProductById();
+
                                         if(productPrice != null){
                                             double newPrice = validDecimalNumberInput(
                                                 "Enter new product price: ",
@@ -195,10 +201,11 @@ public class StoreManagement {
                                         }
                                         
                                         break;
-                                    case 4:
+                                    case 4: // change product quantity
                                         System.out.println("\n-------- MODIFY PRODUCT INFO ------");
                                         System.out.println("\n---------- Change Quantity --------");
                                         Product productQuantity = findProductById();
+
                                         if(productQuantity != null){
                                             int newQty = validNumberInput(
                                                 "Enter new product quantity: ",
@@ -208,20 +215,22 @@ public class StoreManagement {
                                             productQuantity.changeProductQuantity(newQty);
                                         }
                                         break;
-                                    case 5:
+                                    case 5: // change product supplier
                                         System.out.println("\n-------- MODIFY PRODUCT INFO ------");
                                         System.out.println("\n---------- Change Supplier --------");
                                         Product productSupplier = findProductById();
+
                                         if(productSupplier != null){
                                             System.out.print("Enter valid product supplier name: ");
                                             String supplier = scanner.nextLine();
                                             // TODO: add logic to verify supplier
                                         }
                                         break;
-                                    case 6:
+                                    case 6: // change product inventory
                                         System.out.println("\n-------- MODIFY PRODUCT INFO ------");
                                         System.out.println("\n--------- Change Inventory --------");
                                         Product productInventory = findProductById();
+
                                         if(productInventory != null){
                                             System.out.print("Enter valid inventory location: ");
                                             String inventoryName = scanner.nextLine();
@@ -248,9 +257,10 @@ public class StoreManagement {
                                         break;
                                 }
                                 break;
-                            case 5:
+                            case 5: // remove product object
                                 System.out.println("\n--------- REMOVE PRODUCT ---------");
                                 Product product = findProductById();
+
                                 if(product != null){
                                     System.out.println("\n--------- PRODUCT FOUND ---------");
                                     product.showInfo();
