@@ -223,7 +223,23 @@ public class StoreManagement {
                                         if(productSupplier != null){
                                             System.out.print("Enter valid product supplier name: ");
                                             String supplier = scanner.nextLine();
-                                            // TODO: add logic to verify supplier
+                                            
+                                            Supplier matchedSupplier = null;
+                                            for(Supplier existingSupplier : suppliers){
+                                                if(existingSupplier.getName().equalsIgnoreCase(supplier)){
+                                                    matchedSupplier = existingSupplier;
+                                                    break;
+                                                }
+                                            }
+
+                                            if(matchedSupplier != null){
+                                                productSupplier.changeProductSupplier(matchedSupplier);
+                                                System.out.println("Product supplier successfully updated!");
+                                            }else{
+                                                System.out.println("Supplier not found! Please try again later!");
+                                                System.out.print("Press 'Enter' to continue...");
+                                                scanner.nextLine();
+                                            }
                                         }
                                         break;
                                     case 6: // change product inventory
