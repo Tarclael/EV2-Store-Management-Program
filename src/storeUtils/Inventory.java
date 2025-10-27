@@ -11,7 +11,7 @@ public class Inventory {
     private Scanner scanner = new Scanner(System.in);
     private ArrayList<Product> products;
 
-    private enum Status{
+    public enum Status{
         Understocked, Normal, Full;
     }
 
@@ -67,10 +67,9 @@ public class Inventory {
     public void showAllInventoryProduct(){
         for(Product product : products){
             product.showInfo();
-            System.out.println("Status" + getInventoryStatus());
-            System.out.print("Press 'Enter' to continue...");
-            scanner.nextLine();
+            System.out.println();
         }
+        System.out.println("Status" + getInventoryStatus());
     }
     
     public void updateTotalValue(){

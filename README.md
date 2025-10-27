@@ -6,7 +6,7 @@
 	2. Search by name
 	3. Add product
 	4. Modify product
-		1. Change ID
+		1. Change ID 
 		2. Change name
 		3. Change price
 		4. Change quantity
