@@ -19,14 +19,13 @@ public class Inventory {
      * constructors
      */
     // no parameter
-    public Inventory(){this(0, null, 0, null);}
+    public Inventory(){this(0, null, 0);}
 
     // all parameters
-    public Inventory(int inventoryId, String location, int maxCapacity, Status status){
+    public Inventory(int inventoryId, String location, int maxCapacity){
         this.inventoryId = inventoryId;
         this.location = location;
         this.maxCapacity = maxCapacity;
-        this.status = status.name();
         this.products = new ArrayList<>();
     }
 
@@ -58,10 +57,11 @@ public class Inventory {
      * methods
      */
     public void showInfo(){
-        System.out.println("ID" + getInventoryId());
-        System.out.println("location" + getInventoryLocation());
-        System.out.println("Current capacity" + currentCapacity + " of " + maxCapacity);
-        System.out.println("Total value" + getTotalValue());
+        System.out.println("ID               : " + getInventoryId());
+        System.out.println("Location         : " + getInventoryLocation());
+        System.out.println("Current capacity : " + currentCapacity + " of " + maxCapacity);
+        System.out.println("Total value      : " + getTotalValue());
+        System.out.println("Status           : " + getInventoryStatus());
     }
     
     public void showAllInventoryProduct(){
@@ -69,7 +69,13 @@ public class Inventory {
             product.showInfo();
             System.out.println();
         }
-        System.out.println("Status" + getInventoryStatus());
+        try {
+            System.out.println("Status" + getInventoryStatus());
+        } catch (Exception e) {
+            System.out.println("Inventory status not set yet!");
+            System.out.print("Press 'Enter' to continue...");
+            scanner.nextLine();
+        }
     }
     
     public void updateTotalValue(){

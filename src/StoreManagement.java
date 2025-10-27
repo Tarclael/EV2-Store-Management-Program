@@ -386,11 +386,12 @@ public class StoreManagement {
                     System.out.println(inventories.size() + " inventory returned.");
                     System.out.print("Press 'Enter' to continue...");
                     scanner.nextLine();
+                    scanner.nextLine();
                     break;
                 case 3:
                     System.out.println("\n----- SEARCH INVENTORY by ID ------");
                     if(inventories.size() < 1){ // if Inventory array is empty
-                        System.out.println("No products yet!");
+                        System.out.println("No inventory yet!");
                     }else{
                         Inventory inventoryFound = findInventoryById();
     
@@ -436,7 +437,7 @@ public class StoreManagement {
                             "Capacity must be at least 1! Please enter a different one!", 
                             "Capacity is a number only! Please try again!");
                         inventory.setInventoryCapacity(capacity);
-
+                        scanner.nextLine();
                         // set new inventory status
                         System.out.print("Set new inventory status: ");
                         String status = scanner.nextLine();
