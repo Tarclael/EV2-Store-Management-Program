@@ -109,4 +109,9 @@ public class Product {
     public void changeProductSupplier(Supplier newSupplier){
         System.out.println("Product supplier has been changed from to " + newSupplier);
     }
+
+    @Override
+    public String toString(){
+        return "Product[" + productId + ", " +  productName + ", $" + price + ", " + ", quantity=" + qty + ", supplier=" + supplier + "inventory=" + inventory + "]";
+    }
 }

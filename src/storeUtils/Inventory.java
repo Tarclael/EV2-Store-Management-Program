@@ -106,4 +106,9 @@ public class Inventory {
         System.out.print("Press 'Enter' to continue...");
         scanner.nextLine();
     }
+
+    @Override
+    public String toString(){
+        return "Inventory[" + inventoryId + ", " +  location + ", max=" + maxCapacity + ", current=" + currentCapacity + ", $" + totalValue + "]";
+    }
 }
