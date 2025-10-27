@@ -227,17 +227,17 @@ public class StoreManagement {
                                             String inventoryName = scanner.nextLine();
 
                                             Inventory matchedInventory = null;
-                                            for (Inventory existingInventory : inventories) {
-                                                if (existingInventory.getInventoryLocation().equalsIgnoreCase(inventoryName)) {
+                                            for(Inventory existingInventory : inventories){
+                                                if(existingInventory.getInventoryLocation().equalsIgnoreCase(inventoryName)){
                                                     matchedInventory = existingInventory;
                                                     break;
                                                 }
                                             }
 
-                                            if (matchedInventory != null) {
+                                            if(matchedInventory != null){
                                                 productInventory.changeProductInventory(matchedInventory);
                                                 System.out.println("Product inventory successfully updated!");
-                                            } else {
+                                            }else{
                                                 System.out.println("Inventory not found! Please try again later!");
                                                 System.out.print("Press 'Enter' to continue...");
                                                 scanner.nextLine();
@@ -249,7 +249,29 @@ public class StoreManagement {
                                 }
                                 break;
                             case 5:
-                                break;
+                                System.out.println("\n--------- REMOVE PRODUCT ---------");
+                                Product product = findProductById();
+                                if(product != null){
+                                    System.out.println("\n--------- PRODUCT FOUND ---------");
+                                    product.showInfo();
+                                    System.out.print("Remove this product (y/n)? ");
+                                    String youSureYouWantToRemove = scanner.nextLine();
+                                    switch(youSureYouWantToRemove){
+                                        case "y":
+                                        case "Y":
+                                            products.remove(product);
+                                            System.out.println("Product successfully removed!");
+                                            break;
+                                        case "n":
+                                        case "N":
+                                            System.out.println("Product removal canceled.");
+                                            break;
+                                        default:
+                                            System.out.println("Invalid choice! Please enter 'y' or 'n'.");
+                                            break;
+                                    }
+                                }
+                            break;
                         }
                     }while(option != 6);
                     option = 0;
