@@ -63,46 +63,50 @@ public class Product {
         System.out.println("Name               : " + getProductName());
         System.out.println("Quantity           : " + getQuantity());
         System.out.println("Price              : $" + getPrice());
-        System.out.println("Inventory location : " + inventory.getInventoryLocation());
-        System.out.println("Supplier           : ");
+        try {
+            System.out.println("Inventory location : " + inventory.getInventoryLocation());
+            System.out.println("Supplier           : ");
+        } catch (Exception e) {
+            System.out.println("Inventory or Supplier not found!\nPlease change it in 'Modify Product', or add new inventory or supplier!");
+        }
     }
     
     public void changeProductID(int newId){
-        System.out.println("Product ID has been changed from " + getProductId() + " to " + newId);
+        System.out.println("Product ID has been changed from to " + newId);
         this.productId = newId;
         System.out.print("Press 'Enter' to continue...");
         scanner.nextLine();
     }
     
     public void changeProductName(String newName){
-        System.out.println("Product name has been changed from " + getProductName() + " to " + newName);
+        System.out.println("Product name has been changed from to " + newName);
         this.productName = newName;
         System.out.print("Press 'Enter' to continue...");
         scanner.nextLine();
     }
     
     public void changeProductQuantity(int newQty){
-        System.out.println("Product quantity has been changed from " + getQuantity() + " to " + newQty);
+        System.out.println("Product quantity has been changed from to " + newQty);
         this.qty = newQty;
         System.out.print("Press 'Enter' to continue...");
         scanner.nextLine();
     }
     
     public void changeProductPrice(double newPrice){
-        System.out.println("Product price has been changed from $" + getPrice() + " to $" + newPrice);
+        System.out.println("Product price has been changed from to $" + newPrice);
         this.price = newPrice;
         System.out.print("Press 'Enter' to continue...");
         scanner.nextLine();
     }
     
     public void changeProductInventory(Inventory newInventory){
-        System.out.println("Product inventory location has been changed from " + getInventory() + " to " + newInventory);
+        System.out.println("Product inventory location has been changed from to " + newInventory);
         this.inventory = newInventory;
         System.out.print("Press 'Enter' to continue...");
         scanner.nextLine();
     }
 
     public void changeProductSupplier(Supplier newSupplier){
-        System.out.println("Product supplier has been changed from " + getSupplier() + " to " + newSupplier);
+        System.out.println("Product supplier has been changed from to " + newSupplier);
     }
 }
