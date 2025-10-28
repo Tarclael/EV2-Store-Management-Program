@@ -11,7 +11,8 @@ public class StoreManagement {
     private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) throws Exception {
         int option = 0;
-        
+        Inventory inventory = new Inventory(1, "east");
+        inventories.add(inventory);
         do{
             /*
              * Main Menu
@@ -166,19 +167,16 @@ public class StoreManagement {
                         }
 
                         // set new product inventory
-                        System.out.print("Enter valid inventory location: ");
-                        String inventory = scanner.nextLine();
+                        Inventory inventory = findInventoryById();
+                        scanner.nextLine();
 
                         // search if inventory exist
-                        for(Inventory existingInventory : inventories){
-                            if(existingInventory.getInventoryLocation().equalsIgnoreCase(inventory)){
-                                product.setInventory(existingInventory);
-                                existingInventory.updateTotalValue();
-                                break;
-                            }else{
-                                System.out.print("Inventory location not found! Please change Inventory location in 'Modify Product' menu!");
-                                break;
-                            }
+                        if(inventory != null){
+                            product.setInventory(inventory);
+                            inventory.updateCurrentCapacity(qty);
+                        }else{
+                           System.out.print("Inventory location not found! Please change Inventory location in 'Modify Product' menu!");
+                           break;
                         }
 
                         System.out.println("\n----------- PRODUCT INFO ----------");
@@ -435,35 +433,6 @@ public class StoreManagement {
                         System.out.print("Enter new inventory location: ");
                         inventory.setInventoryLocation(scanner.nextLine());
 
-                        // set new inventory capacity
-                        int capacity = validNumberInput(
-                            "Enter new inventory capacity: ", 
-                            "Capacity must be at least 1! Please enter a different one!", 
-                            "Capacity is a number only! Please try again!");
-                        inventory.setInventoryCapacity(capacity);
-                        scanner.nextLine();
-                        // set new inventory status
-                        System.out.print("Set new inventory status: ");
-                        String status = scanner.nextLine();
-                        switch(status){
-                            case "Understocked":
-                            case "understocked":
-                                inventory.setInventoryStatus(storeUtils.Inventory.Status.Understocked);
-                                break;
-                            case "Normal":
-                            case "normal":
-                                inventory.setInventoryStatus(storeUtils.Inventory.Status.Normal);
-                                break;
-                            case "Full":
-                            case "full":
-                                inventory.setInventoryStatus(storeUtils.Inventory.Status.Full);
-                                break;
-                            default:    
-                                System.out.println("Invalid status!\nPlease change it in 'Modify Inventory'!");
-                                scanner.nextLine();
-                                break;
-                        }
-
                         System.out.println("\n---------- INVENTORY INFO ---------");
                         inventory.showInfo();
                         inventories.add(inventory);
@@ -476,10 +445,9 @@ public class StoreManagement {
                     System.out.println("\n------- MODIFY INVENTORY INFO -----");
                     System.out.println("1. Change ID");
                     System.out.println("2. Change Location");
-                    System.out.println("3. Change Capacity");
-                    System.out.println("4. Change Status");
-                    System.out.println("5. Back");
-                    option = validMenuOption(1, 5);
+                    System.out.println("3. Change Status");
+                    System.out.println("4. Back");
+                    option = validMenuOption(1, 4);
 
                     switch(option){
                         case 1:
@@ -506,18 +474,6 @@ public class StoreManagement {
                             }
                             break;
                         case 3:
-                            System.out.println("\n---------- Change Capacity --------");
-                            Inventory inventoryCapacity = findInventoryById();
-
-                            if(inventoryCapacity != null){
-                                int capacity = validNumberInput(
-                                    "Enter new inventory capacity: ", 
-                                    "Capacity must be at least 1! Please enter a different one!", 
-                                    "Capacity is a number only! Please try again!");
-                                inventoryCapacity.setInventoryCapacity(capacity);
-                            }
-                            break;
-                        case 4:
                             System.out.println("\n----------- Change Status ---------");
                             Inventory inventoryStatus = findInventoryById();
                             scanner.nextLine();
@@ -531,10 +487,6 @@ public class StoreManagement {
                                 case "Normal":
                                 case "normal":
                                     inventoryStatus.setInventoryStatus(storeUtils.Inventory.Status.Normal);
-                                    break;
-                                case "Full":
-                                case "full":
-                                    inventoryStatus.setInventoryStatus(storeUtils.Inventory.Status.Full);
                                     break;
                                 default:    
                                     System.out.println("Invalid status!\nPlease try again later!");
@@ -730,8 +682,8 @@ public class StoreManagement {
             isValid = true;
             try{
                 System.out.print(question);
-                num = scanner.nextInt();
-                if(num < 1){
+                num = scanner.nextDouble();
+                if(num <= 0){
                     scanner.nextLine();
                     System.out.println(error1);
                     isValid = false;

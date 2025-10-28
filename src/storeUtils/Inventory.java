@@ -3,7 +3,7 @@ package storeUtils;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class Inventory {
-    private int inventoryId, maxCapacity, currentCapacity;
+    private int inventoryId, currentCapacity;
     private String location;
     private double totalValue;
     private String status;
@@ -12,20 +12,19 @@ public class Inventory {
     private ArrayList<Product> products;
 
     public enum Status{
-        Understocked, Normal, Full;
+        Understocked, Normal;
     }
 
     /*
      * constructors
      */
     // no parameter
-    public Inventory(){this(0, null, 0);}
+    public Inventory(){this(0, null);}
 
     // all parameters
-    public Inventory(int inventoryId, String location, int maxCapacity){
+    public Inventory(int inventoryId, String location){
         this.inventoryId = inventoryId;
         this.location = location;
-        this.maxCapacity = maxCapacity;
         this.products = new ArrayList<>();
         setInventoryStatus();
     }
@@ -41,16 +40,11 @@ public class Inventory {
     public void setInventoryLocation(String location){this.location = location;}
     public String getInventoryLocation(){return location;}
 
-    // inventory capacity
-    public void setInventoryCapacity(int capacity){this.maxCapacity = capacity;}
-    public int getInventoryCapacity(){return maxCapacity;}
 
     // inventory status
     public void setInventoryStatus(){
         if(currentCapacity <= 10){
             this.status = Status.Understocked.toString();
-        }else if(currentCapacity == maxCapacity){
-            this.status = Status.Full.toString();
         }else{
             this.status = Status.Normal.toString();
         }
@@ -62,9 +56,11 @@ public class Inventory {
         updateTotalValue();
         return totalValue;
     }
-    public void setCurrentCapacity(int addedCapacity){
+    public void updateCurrentCapacity(int addedCapacity){
         currentCapacity += addedCapacity;
-        
+    }
+    public int getCurrentCapacity(){
+        return currentCapacity;
     }
 
     /*
@@ -73,8 +69,8 @@ public class Inventory {
     public void showInfo(){
         System.out.println("ID               : " + getInventoryId());
         System.out.println("Location         : " + getInventoryLocation());
-        System.out.println("Current capacity : " + currentCapacity + " of " + maxCapacity);
-        System.out.println("Total value      : " + getTotalValue());
+        System.out.println("Current capacity : " + getCurrentCapacity());
+        System.out.println("Total value      : $" + getTotalValue());
         System.out.println("Status           : " + getInventoryStatus());
     }
     
@@ -99,18 +95,12 @@ public class Inventory {
     public void updateTotalValue(){
         currentCapacity = 0;
         totalValue = 0;
-        
+
         for(Product product : products){
-            if(currentCapacity + product.getQuantity() <= maxCapacity){
-                currentCapacity += product.getQuantity();
-                totalValue += product.getQuantity() * product.getPrice();
-            }else{
-                setInventoryStatus();
-                System.out.println("Inventory " + getInventoryId() + " is full.");
-                System.out.print("Press 'Enter' to continue...");
-                scanner.nextLine();
-                break;
-            }
+            currentCapacity += product.getQuantity();
+            totalValue += (double)product.getQuantity() * product.getPrice();
+            
+            setInventoryStatus();
         }
     }
     
@@ -132,6 +122,6 @@ public class Inventory {
 
     @Override
     public String toString(){
-        return "Inventory[" + inventoryId + ", " +  location + ", max=" + maxCapacity + ", current=" + currentCapacity + ", $" + totalValue + "]";
+        return "Inventory[" + getInventoryId() + ", " +  getInventoryLocation() + ", current=" + getCurrentCapacity() + ", $" + getTotalValue() + "]";
     }
 }
