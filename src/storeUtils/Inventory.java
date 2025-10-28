@@ -12,7 +12,7 @@ public class Inventory {
     private ArrayList<Product> products;
 
     public enum Status{
-        Understocked, Normal;
+        Understocked, Normal, UnderMaintenance;
     }
 
     /*
@@ -49,6 +49,26 @@ public class Inventory {
             this.status = Status.Normal.toString();
         }
     }
+    
+    public void setInventoryStatus(int status){
+        switch(status){
+            case 1:
+                this.status = Status.Normal.name();
+                System.out.println("Status changed to normal.");
+                break;
+            case 2:
+                this.status = Status.Understocked.name();
+                System.out.println("Status changed to understocked.");
+                break;
+            case 3:
+                this.status = Status.UnderMaintenance.name();
+                System.out.println("Status changed to under maintenance.");
+                break;
+        }
+        System.out.print("Press 'Enter' to continue...");
+        scanner.nextLine();
+    }
+
     public void setInventoryStatus(Status status){this.status = status.name();}
     public String getInventoryStatus(){return status.toString();}    
 
@@ -122,6 +142,6 @@ public class Inventory {
 
     @Override
     public String toString(){
-        return "Inventory[" + getInventoryId() + ", " +  getInventoryLocation() + ", current=" + getCurrentCapacity() + ", $" + getTotalValue() + "]";
+        return "Inventory[" + getInventoryId() + ", " +  getInventoryLocation() + ", current capacity = " + getCurrentCapacity() + ", total value = $" + getTotalValue() + "]";
     }
 }
