@@ -26,20 +26,20 @@ public class Supplier {
     }
 
     // ===== Getter & Setter =====
-    public int getSupplierId() { return supplierId; }
     public void setSupplierId(int supplierId) { this.supplierId = supplierId; }
+    public int getSupplierId() { return supplierId; }
 
-    public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+    public String getName() { return name; }
 
-    public String getCompany() { return company; }
     public void setCompany(String company) { this.company = company; }
+    public String getCompany() { return company; }
 
-    public String getPhoneNumber() { return phoneNumber; }
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public String getPhoneNumber() { return phoneNumber; }
 
-    public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
+    public boolean isActive() { return active; }
 
     // ===== Methods =====
     public void activateSupplier() {
@@ -58,9 +58,7 @@ public class Supplier {
     }
 
     public void showSupplierInfo() {
-        System.out.println("Supplier ID: " + supplierId + " | Name: " + name +
-                " | Company: " + company + " | Phone: " + phoneNumber +
-                " | Active: " + (active ? "Yes" : "No"));
+        System.out.println("Supplier ID: " + supplierId + " | Name: " + name + " | Company: " + company + " | Phone: " + phoneNumber +" | Active: " + (active ? "Yes" : "No"));
     }
 
     public String getSummary() {

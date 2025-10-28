@@ -44,7 +44,6 @@
 		3. Change salary
 		4. Back
 	5. Remove employee
-	6. Give bonus
-	7. Return to Main Menu
+	6. Return to Main Menu
 5. Exit
 

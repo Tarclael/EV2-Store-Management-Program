@@ -1,6 +1,8 @@
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.function.Function;
+
 import storeUtils.*;
 
 public class StoreManagement {
@@ -81,7 +83,7 @@ public class StoreManagement {
                         System.out.println();
                     }
                     scanner.nextLine();
-                    System.out.println(products.size() + " product returned.");
+                    System.out.println(products.size() + " product/s returned.");
                     System.out.print("Press 'Enter' to continue...");
                     scanner.nextLine();
                     break;
@@ -112,11 +114,13 @@ public class StoreManagement {
                     for(int i = 0; i < productAmount; i++){
                         Product product = new Product();
                         // set new product ID
-                        int productID = validProductId(
+                        int productID = validId(
                             "Enter new product ID: ", 
                             "ID must be more than 1! Please try again!", 
                             "ID is number only! Please try again!", 
-                            "Product ID already exist! Please enter a different one!");
+                            "Product ID already exist! Please enter a different one!", 
+                            products, Product::getProductId);
+                        
                         product.setProductId(productID);
                         scanner.nextLine();
 
@@ -308,7 +312,7 @@ public class StoreManagement {
                         System.out.println();
                     }
                     scanner.nextLine();
-                    System.out.println(inventories.size() + " inventory returned.");
+                    System.out.println(inventories.size() + " inventory/s returned.");
                     System.out.print("Press 'Enter' to continue...");
                     scanner.nextLine();
                     break;
@@ -333,6 +337,13 @@ public class StoreManagement {
                     break;
                 case 3:
                     System.out.println("\n----- SEARCH INVENTORY by ID ------");
+                    if(inventories.size() < 1){ // if inventory array is empty
+                        System.out.println("No inventory yet!");
+                        System.out.print("Press 'Enter' to continue...");
+                        scanner.nextLine();
+                        break;
+                    }
+
                     Inventory inventoryFound = findInventoryById();
                     scanner.nextLine();
                     if(inventoryFound != null){
@@ -353,11 +364,12 @@ public class StoreManagement {
                     for(int i = 0; i < amount; i++){
                         Inventory inventory = new Inventory();
                         // set new inventory ID
-                        int id = validInventoryId(
+                        int id = validId(
                             "Enter new inventory ID: ", 
                             "ID must be more than 1! Please try again!", 
                             "ID is number only! Please try again!", 
-                            "Inventory ID already exist! Please enter a different one!");
+                            "Inventory ID already exist! Please enter a different one!",
+                            inventories, Inventory::getInventoryId);
                         inventory.setInventoryId(id);
                         scanner.nextLine();
 
@@ -365,9 +377,9 @@ public class StoreManagement {
                         System.out.print("Enter new inventory location: ");
                         inventory.setInventoryLocation(scanner.nextLine());
 
+                        inventories.add(inventory);
                         System.out.println("\n---------- INVENTORY INFO ---------");
                         inventory.showInfo();
-                        inventories.add(inventory);
                         System.out.print("Press 'Enter' to continue...");
                         scanner.nextLine();
                         System.out.println();                              
@@ -375,28 +387,13 @@ public class StoreManagement {
                     break;
                 case 5:
                     System.out.println("\n------- MODIFY INVENTORY INFO -----");
-                    System.out.println("1. Change ID");
-                    System.out.println("2. Change Location");
-                    System.out.println("3. Change Status");
-                    System.out.println("4. Back");
-                    option = validMenuOption(1, 4);
+                    System.out.println("1. Change Location");
+                    System.out.println("2. Change Status");
+                    System.out.println("3. Back");
+                    option = validMenuOption(1, 3);
 
                     switch(option){
                         case 1:
-                            System.out.println("\n------------- Change Id -----------");
-                            Inventory inventoryId = findInventoryById(); // search inventory by id
-                            scanner.nextLine();
-                            if(inventoryId != null){ // if inventory found
-                                int newId = validInventoryId(
-                                    "Enter new inventory ID: ",
-                                    "ID must be more than 1! Please try again!",
-                                    "ID is number only! Please try again!",
-                                    "Inventory ID already exist! Please enter a different one!"
-                                );
-                                inventoryId.setInventoryId(newId);
-                            }
-                            break;
-                        case 2:
                             System.out.println("\n---------- Change Location --------");
                             Inventory inventoryLocation = findInventoryById();
                             scanner.nextLine();
@@ -405,7 +402,7 @@ public class StoreManagement {
                                 inventoryLocation.setInventoryLocation(scanner.nextLine());
                             }
                             break;
-                        case 3:
+                        case 2:
                             System.out.println("\n----------- Change Status ---------");
                             Inventory inventoryStatus = findInventoryById();
                             scanner.nextLine();
@@ -416,7 +413,7 @@ public class StoreManagement {
                             option = validMenuOption(1, 3);
                             inventoryStatus.setInventoryStatus(option);
                             break;
-                        case 4:
+                        case 3:
                             break;
                     }
                     break;
@@ -460,15 +457,244 @@ public class StoreManagement {
             System.out.println("\n=== WAREHOUSE MANAGEMENT SYSTEM ===");
             System.out.println("------ MANAGE SUPPLIER MENU -------");
             System.out.println("1. See All Supplier");
-            System.out.println("3. Search by name");
-            System.out.println("4. Add Supplier");
-            System.out.println("5. Modify Supplier");
-            System.out.println("6. Remove Supplier");
-            System.out.println("7. Return to Main Menu");
-            option = validMenuOption(1, 7);
+            System.out.println("2. Search by ID");
+            System.out.println("3. Add Supplier");
+            System.out.println("4. Modify Supplier");
+            System.out.println("5. Remove Supplier");
+            System.out.println("6. Return to Main Menu");
+            option = validMenuOption(1, 6);
 
             switch(option){
                 case 1:
+                    System.out.println("\n--------- ALL SUPPLIERS -----------");
+                    if(suppliers.size() < 1){ // if inventory array is empty
+                        System.out.println("No supplier yet!");
+                    }
+                    // loop through each inventories element
+                    for(Supplier supplier : suppliers){
+                        supplier.showSupplierInfo();
+                        System.out.println();
+                    }
+                    scanner.nextLine();
+                    System.out.println(suppliers.size() + " supplier/s returned.");
+                    System.out.print("Press 'Enter' to continue...");
+                    scanner.nextLine();
+                    break;
+                case 2:
+                    System.out.println("\n----- SEARCH SUPPLIERS by ID ------");
+                    if(suppliers.size() < 1){ // if supplier array is empty
+                        System.out.println("No supplier yet!");
+                        System.out.print("Press 'Enter' to continue...");
+                        scanner.nextLine();
+                        break;
+                    }
+
+                    Supplier supplierFound = findSupplierById();
+                    scanner.nextLine();
+                    if(supplierFound != null){
+                        System.out.println("\n-------- SUPPLIER FOUND ---------");
+                        supplierFound.showSupplierInfo();
+                        System.out.print("Press 'Enter' to continue...");
+                        scanner.nextLine();
+                    }
+                    break;
+                case 3:
+                    System.out.println("\n-------- ADD NEW SUPPLIER ---------");
+                    // enter amount of new inventory
+                    int amount = validNumberInput(
+                        "How many new suppliers? ", 
+                        "New supplier must be at least 1! Please try again!", 
+                        "Invalid input! Please try again!\n");
+
+                    for(int i = 0; i < amount; i++){
+                        Supplier newSupplier = new Supplier();
+                        // set new supplier id
+                        int id = validId(
+                            "Enter new supplier ID: ", 
+                            "ID must be more than 1! Please try again!", 
+                            "ID is number only! Please try again!", 
+                            "Inventory ID already exist! Please enter a different one!", 
+                            suppliers, Supplier::getSupplierId);
+                        newSupplier.setSupplierId(id);
+                        scanner.nextLine();
+
+                        // set new supplier name
+                        System.out.print("Enter new supplier name: ");
+                        newSupplier.setName(scanner.nextLine());
+
+                        // set new supplier company
+                        System.out.print("Enter new supplier company: ");
+                        newSupplier.setCompany(scanner.nextLine());
+
+                        // set new supplier phone number
+                        System.out.print("Enter new supplier contact: ");
+                        newSupplier.setPhoneNumber(scanner.nextLine());
+
+                        boolean isValid;
+                        do{
+                            isValid = true;
+                            System.out.print("Activate supplier (y/n)? ");
+                            String yOrN = scanner.nextLine();
+                            switch(yOrN){
+                                case "y":
+                                case "Y":
+                                    newSupplier.setActive(true);
+                                    break;
+                                case "n":
+                                case "N":
+                                    newSupplier.setActive(false);
+                                    break;
+                                default:
+                                    System.out.println("Invalid option! enter only 'y' or 'n'!");
+                                    isValid = false;
+                            }
+                        }while(!isValid);
+
+                        suppliers.add(newSupplier);
+                        System.out.println("\n---------- SUPPLIER INFO ----------");
+                        newSupplier.showSupplierInfo();
+                        System.out.print("Press 'Enter' to continue...");
+                        scanner.nextLine();
+                        System.out.println();
+                    }
+                    break;
+                case 4:
+                    System.out.println("\n------- MODIFY SUPPLIER INFO ------");
+                    System.out.println("1. Change Name");
+                    System.out.println("2. Change Company");
+                    System.out.println("3. Change Contact");
+                    System.out.println("4. Change Status");
+                    System.out.println("5. Back");
+                    option = validMenuOption(1, 5);
+
+                    switch(option){
+                        case 1:
+                            System.out.println("\n------------ Change Name ----------");
+                            Supplier supplierName = findSupplierById();
+                            scanner.nextLine();
+
+                            if(supplierName != null){
+                                System.out.print("Enter new supplier name: ");
+                                supplierName.setName(scanner.nextLine());
+                            }
+                            break;
+                        case 2:
+                            System.out.println("\n----------- Change Company --------");
+                            Supplier supplierCompany = findSupplierById();
+                            scanner.nextLine();
+
+                            if(supplierCompany != null){
+                                System.out.print("Enter new supplier company: ");
+                                supplierCompany.setCompany(scanner.nextLine());
+                            }
+                            break;
+                        case 3:
+                            System.out.println("\n----------- Change Contact --------");
+                            Supplier supplierContact = findSupplierById();
+                            scanner.nextLine();
+
+                            if(supplierContact != null){
+                                System.out.print("Enter new supplier contact: ");
+                                supplierContact.setPhoneNumber(scanner.nextLine());
+                            }
+                            break;
+                        case 4:
+                            System.out.println("\n----------- Change Status ---------");
+                            Supplier supplierStatus = findSupplierById();
+                            scanner.nextLine();
+
+                            if(supplierStatus != null){
+                                boolean isValid;
+                                do{
+                                    isValid = true;
+                                    System.out.print("Change supplier status to (activate = 1; deactivate = 0): ");
+                                    String setStatus = scanner.nextLine();
+                                    
+                                    switch(setStatus){
+                                        case "1":
+                                            supplierStatus.activateSupplier();
+                                            System.out.print("Press 'Enter' to continue...");
+                                            scanner.nextLine();
+                                            break;
+                                        case "0":
+                                            supplierStatus.deactivateSupplier();
+                                            System.out.print("Press 'Enter' to continue...");
+                                            scanner.nextLine();
+                                            break;
+                                        default:
+                                            System.out.println("Invalid option! Enter 1 or 0!");
+                                            isValid = false;
+                                            break;
+                                    }
+                                }while(!isValid);
+                            }
+                            break;
+                        case 5:
+                            break;
+                    }
+                    break;
+                case 5:
+                    System.out.println("\n--------- REMOVE SUPPLIER ---------");
+                    Supplier supplier = findSupplierById();
+                    scanner.nextLine();
+                    if(supplier != null){
+                        System.out.println("\n-------- SUPPLIER FOUND ---------");
+                        supplier.showSupplierInfo();
+                        System.out.print("Remove this supplier (y/n)? ");
+                        String youSureYouWantToRemove = scanner.nextLine();
+                        switch(youSureYouWantToRemove){
+                            case "y":
+                            case "Y":
+                                suppliers.remove(supplier);
+                                System.out.println("Supplier successfully removed!");
+                                break;
+                            case "n":
+                            case "N":
+                                System.out.println("Supplier removal canceled.");
+                                break;
+                            default:
+                                System.out.println("Invalid choice! Please enter 'y' or 'n'.");
+                                break;
+                        }
+                    }
+                    break;
+                case 6:
+                    break;
+            }
+        }while(option != 6);
+    }
+
+    /*
+     * Manage Employee Menu
+     */
+    private static void manageEmployee(){
+        int option = 0;
+        do{
+            System.out.println("\n=== WAREHOUSE MANAGEMENT SYSTEM ===");
+            System.out.println("------ MANAGE EMPLOYEE MENU -------");
+            System.out.println("1. See All Employee");
+            System.out.println("2. Search by ID");
+            System.out.println("3. Add Employee");
+            System.out.println("4. Modify Employee");
+            System.out.println("5. Remove Employee");
+            System.out.println("6. Return to Main Menu");
+            option = validMenuOption(1, 6);
+
+            switch(option){
+                case 1:
+                    System.out.println("\n--------- ALL EMPLOYEES -----------");
+                    if(employees.size() < 1){ // if employees array is empty
+                        System.out.println("No employees yet!");
+                    }
+                    // loop through each inventories element
+                    for(Supplier supplier : suppliers){
+                        supplier.showSupplierInfo();
+                        System.out.println();
+                    }
+                    scanner.nextLine();
+                    System.out.println(suppliers.size() + " supplier/s returned.");
+                    System.out.print("Press 'Enter' to continue...");
+                    scanner.nextLine();
                     break;
                 case 2:
                     break;
@@ -480,17 +706,8 @@ public class StoreManagement {
                     break;
                 case 6:
                     break;
-                case 7:
-                    break;
             }
-        }while(option != 7);
-    }
-
-    /*
-     * Manage Employee Menu
-     */
-    private static void manageEmployee(){
-        int option = 0;
+        }while(option != 6);
     }
 
     private static int validMenuOption(int lowestRange, int highestRange){
@@ -537,7 +754,7 @@ public class StoreManagement {
         return num;
     }
     
-    private static int validProductId(String question, String error1, String error2, String isExistResponse){
+    /*private static int validProductId(String question, String error1, String error2, String isExistResponse){
         int num = 0;
         boolean isValid;
         do{
@@ -565,9 +782,9 @@ public class StoreManagement {
             }
         }while(!isValid);
         return num;
-    }
+    }*/
 
-    private static int validInventoryId(String question, String error1, String error2, String isExistResponse){
+    /*private static int validInventoryId(String question, String error1, String error2, String isExistResponse){
         int num = 0;
         boolean isValid;
         do{
@@ -595,7 +812,65 @@ public class StoreManagement {
             }
         }while(!isValid);
         return num;
-    }
+    }*/
+    /*private static int validSupplierId(String question, String error1, String error2, String isExistResponse){
+        int num = 0;
+        boolean isValid;
+        do{
+            isValid = true;
+            try{
+                System.out.print(question);
+                num = scanner.nextInt();
+                if(num < 1){
+                    scanner.nextLine();
+                    System.out.println(error1);
+                    isValid = false;
+                }
+
+                for(Supplier existingSupplier : suppliers){
+                    if(existingSupplier.getSupplierId() == num){
+                        System.out.println(isExistResponse);
+                        isValid = false;
+                        break;
+                    }
+                }
+            }catch(Exception e){
+                scanner.nextLine();
+                System.out.println(error2);
+                isValid = false;
+            }
+        }while(!isValid);
+        return num;
+    }*/
+    /*private static int validInventoryId(String question, String error1, String error2, String isExistResponse){
+        int num = 0;
+        boolean isValid;
+        do{
+            isValid = true;
+            try{
+                System.out.print(question);
+                num = scanner.nextInt();
+                if(num < 1){
+                    scanner.nextLine();
+                    System.out.println(error1);
+                    isValid = false;
+                }
+
+                for(Inventory existingInventory : inventories){
+                    if(existingInventory.getInventoryId() == num){
+                        System.out.println(isExistResponse);
+                        isValid = false;
+                        break;
+                    }
+                }
+            }catch(Exception e){
+                scanner.nextLine();
+                System.out.println(error2);
+                isValid = false;
+            }
+        }while(!isValid);
+        return num;
+    }*/
 
     private static double validDecimalNumberInput(String question, String error1, String error2){
         double num = 0;
@@ -703,7 +978,7 @@ public class StoreManagement {
         return null;
     }
 
-    private static Employee findEmployeeById() {
+    private static Employee findEmployeeById(){
         int id;
         try {
             id = validNumberInput(
@@ -731,4 +1006,41 @@ public class StoreManagement {
         return null;
     }
 
+    public static <T> int validId(
+        String question,
+        String error1,
+        String error2,
+        String isExistResponse,
+        ArrayList<T> list,
+        Function<T, Integer> idGetter
+    ){
+        int num = 0;
+        boolean isValid;
+
+        do {
+            isValid = true;
+            try {
+                System.out.print(question);
+                num = scanner.nextInt();
+                if (num < 1) {
+                    scanner.nextLine();
+                    System.out.println(error1);
+                    isValid = false;
+                    continue;
+                }
+                for (T item : list) {
+                    if (idGetter.apply(item) == num) {
+                        System.out.println(isExistResponse);
+                        isValid = false;
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                scanner.nextLine();
+                System.out.println(error2);
+                isValid = false;
+            }
+        } while (!isValid);
+        return num;
+    }
 }
