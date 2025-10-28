@@ -106,13 +106,13 @@ public class StoreManagement {
                 case 3: // add new product object
                     System.out.println("\n--------- ADD NEW PRODUCT ---------");
                     // enter amount of new product
-                    int productAmount = validNumberInput(
+                    int amount = validNumberInput(
                         "How many new products? ", 
                         "New product must be at least 1! Please try again!", 
                         "Invalid input! Please try again!\n");
 
-                    for(int i = 0; i < productAmount; i++){
-                        Product product = new Product();
+                    for(int i = 0; i < amount; i++){
+                        Product newProduct = new Product();
                         // set new product ID
                         int productID = validId(
                             "Enter new product ID: ", 
@@ -121,33 +121,33 @@ public class StoreManagement {
                             "Product ID already exist! Please enter a different one!", 
                             products, Product::getProductId);
                         
-                        product.setProductId(productID);
+                        newProduct.setProductId(productID);
                         scanner.nextLine();
 
                         // set new product name
                         System.out.print("Enter new product name: ");
-                        product.setProductName(scanner.nextLine());
+                        newProduct.setProductName(scanner.nextLine());
 
                         // set new product price
                         double price = validDecimalNumberInput(
                             "Enter new product price: $", 
                             "Price must be at least $1! Please enter a different one!", 
                             "Price is a number only! Please try again!");
-                        product.setPrice(price);
+                        newProduct.setPrice(price);
 
                         // set new product qty
                         int qty = validNumberInput(
                             "Enter new product quantity: ", 
                             "Product quantity must be at least 1!", 
                             "Qty is a whole number only! Please try again!");
-                        product.setQuantity(qty);
+                        newProduct.setQuantity(qty);
                         scanner.nextLine();
 
                         // set new product supplier
                         Supplier supplier = findSupplierById();
                         scanner.nextLine();
                         if(supplier != null){
-                            product.setSupplier(supplier);
+                            newProduct.setSupplier(supplier);
                         }
 
                         // set new product inventory
@@ -156,13 +156,13 @@ public class StoreManagement {
                         
                         // search if inventory exist
                         if(inventory != null){
-                            product.setInventory(inventory);
+                            newProduct.setInventory(inventory);
                             inventory.updateCurrentCapacity(qty);
                         }
                         
-                        products.add(product);
+                        products.add(newProduct);
                         System.out.println("\n----------- PRODUCT INFO ----------");
-                        product.showInfo();
+                        newProduct.showInfo();
                         System.out.print("Press 'Enter' to continue...");
                         scanner.nextLine();
                         System.out.println();                              
@@ -362,7 +362,7 @@ public class StoreManagement {
                         "Invalid input! Please try again!\n");
 
                     for(int i = 0; i < amount; i++){
-                        Inventory inventory = new Inventory();
+                        Inventory newInventory = new Inventory();
                         // set new inventory ID
                         int id = validId(
                             "Enter new inventory ID: ", 
@@ -370,16 +370,16 @@ public class StoreManagement {
                             "ID is number only! Please try again!", 
                             "Inventory ID already exist! Please enter a different one!",
                             inventories, Inventory::getInventoryId);
-                        inventory.setInventoryId(id);
+                        newInventory.setInventoryId(id);
                         scanner.nextLine();
 
                         // set new inventory location
                         System.out.print("Enter new inventory location: ");
-                        inventory.setInventoryLocation(scanner.nextLine());
+                        newInventory.setInventoryLocation(scanner.nextLine());
 
-                        inventories.add(inventory);
+                        inventories.add(newInventory);
                         System.out.println("\n---------- INVENTORY INFO ---------");
-                        inventory.showInfo();
+                        newInventory.showInfo();
                         System.out.print("Press 'Enter' to continue...");
                         scanner.nextLine();
                         System.out.println();                              
@@ -686,23 +686,151 @@ public class StoreManagement {
                     if(employees.size() < 1){ // if employees array is empty
                         System.out.println("No employees yet!");
                     }
-                    // loop through each inventories element
-                    for(Supplier supplier : suppliers){
-                        supplier.showSupplierInfo();
+                    for(Employee employee : employees){
+                        employee.displayInfo();
                         System.out.println();
                     }
                     scanner.nextLine();
-                    System.out.println(suppliers.size() + " supplier/s returned.");
+                    System.out.println(employees.size() + " employee/s returned.");
                     System.out.print("Press 'Enter' to continue...");
                     scanner.nextLine();
                     break;
                 case 2:
+                    System.out.println("\n----- SEARCH EMPLOYEE by ID -------");
+                    if(employees.size() < 1){
+                        System.out.println("No employee yet!");
+                        System.out.print("Press 'Enter' to continue...");
+                        scanner.nextLine();
+                        break;
+                    }
+
+                    Employee employeeFound = findEmployeeById();
+                    scanner.nextLine();
+                    if(employeeFound != null){
+                        System.out.println("\n-------- EMPLOYEE FOUND ---------");
+                        employeeFound.displayInfo();
+                        System.out.print("Press 'Enter' to continue...");
+                        scanner.nextLine();
+                    }
                     break;
                 case 3:
+                    System.out.println("\n-------- ADD NEW EMPLOYEE ---------");
+                    // enter amount of new inventory
+                    int amount = validNumberInput(
+                        "How many new employees? ", 
+                        "New employees must be at least 1! Please try again!", 
+                        "Invalid input! Please try again!\n");
+
+                    for(int i = 0; i < amount; i++){
+                        Employee newEmployee = new Employee();
+                        // set new supplier id
+                        int id = validId(
+                            "Enter new supplier ID: ", 
+                            "ID must be more than 1! Please try again!", 
+                            "ID is number only! Please try again!", 
+                            "Inventory ID already exist! Please enter a different one!", 
+                            employees, Employee::getId);
+                        newEmployee.setId(id);
+                        scanner.nextLine();
+
+                        // set new employee name
+                        System.out.print("Enter new employee name: ");
+                        newEmployee.setName(scanner.nextLine());
+
+                        // set new employee position
+                        System.out.print("Enter new employee position: ");
+                        newEmployee.setPosition(scanner.nextLine());
+
+                        // set new employee salary
+                        double employeeSalary = validDecimalNumberInput(
+                            "Enter new employee salary: $", 
+                            "Salary must be above $0!", 
+                            "Salary is a number only!"
+                            );
+                        newEmployee.setSalary(employeeSalary);
+                        scanner.nextLine();
+                        
+                        newEmployee.startDuty();
+                        employees.add(newEmployee);
+                        System.out.println("\n---------- EMPLOYEE INFO ----------");
+                        newEmployee.displayInfo();
+                        System.out.print("Press 'Enter' to continue...");
+                        scanner.nextLine();
+                        System.out.println();
+                    }
                     break;
                 case 4:
+                    System.out.println("\n------- MODIFY EMPLOYEE INFO ------");
+                    System.out.println("1. Change Name");
+                    System.out.println("2. Change Position");
+                    System.out.println("3. Change Salary");
+                    System.out.println("4. Back");
+                    option = validMenuOption(1, 4);
+
+                    switch(option){
+                        case 1:
+                            System.out.println("\n------------ Change Name ----------");
+                            Employee employeeName = findEmployeeById();
+                            scanner.nextLine();
+
+                            if(employeeName != null){
+                                System.out.print("Enter new employee name: ");
+                                employeeName.setName(scanner.nextLine());
+                            }
+                            break;
+                        case 2:
+                            System.out.println("\n---------- Change Position --------");
+                            Employee employeeRole = findEmployeeById();
+                            scanner.nextLine();
+
+                            if(employeeRole != null){
+                                System.out.print("Enter new employee position: ");
+                                employeeRole.setName(scanner.nextLine());
+                            }
+                            break;
+                        case 3:
+                            System.out.println("\n----------- Change Salary ---------");
+                            Employee employeeSalary = findEmployeeById();
+                            scanner.nextLine();
+
+                            if(employeeSalary != null){
+                                employeeSalary.setSalary(
+                                    validDecimalNumberInput(
+                                    "Enter new employee salary: $", 
+                                    "Salary must be above $0!", 
+                                    "Salary is a number only!"
+                                    )
+                                );
+                            }
+                            break;
+                        case 4:
+                            break;
+                    }
                     break;
                 case 5:
+                    System.out.println("\n--------- REMOVE EMPLOYEE ---------");
+                    Employee employee = findEmployeeById();
+                    scanner.nextLine();
+                    if(employee != null){
+                        System.out.println("\n-------- EMPLOYEE FOUND ---------");
+                        employee.displayInfo();
+                        System.out.print("Remove this employee (y/n)? ");
+                        String youSureYouWantToRemove = scanner.nextLine();
+                        switch(youSureYouWantToRemove){
+                            case "y":
+                            case "Y":
+                                employees.remove(employee);
+                                System.out.println("Supplier successfully removed!");
+                                break;
+                            case "n":
+                            case "N":
+                                System.out.println("Supplier removal canceled.");
+                                break;
+                            default:
+                                System.out.println("Invalid choice! Please enter 'y' or 'n'.");
+                                break;
+                        }
+                    }
                     break;
                 case 6:
                     break;
