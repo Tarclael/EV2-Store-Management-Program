@@ -59,24 +59,23 @@ public class Product {
      * methods
      */
     public void showInfo() {
-    System.out.println("ID                 : " + getProductId());
-    System.out.println("Name               : " + getProductName());
-    System.out.println("Quantity           : " + getQuantity());
-    System.out.println("Price              : $" + getPrice());
+        System.out.println("ID                 : " + getProductId());
+        System.out.println("Name               : " + getProductName());
+        System.out.println("Quantity           : " + getQuantity());
+        System.out.println("Price              : $" + getPrice());
 
-    if (inventory != null) {
-        System.out.println("Inventory location : " + inventory.getInventoryLocation());
-    } else {
-        System.out.println("Inventory location : Not exist/set yet!");
+        if(inventory != null){
+            System.out.println("Inventory location : " + inventory.getInventoryLocation());
+        }else{
+            System.out.println("Inventory location : Not exist/set yet!");
+        }
+
+        if(supplier != null){
+            System.out.println("Supplier           : " + supplier.getName());
+        }else{
+            System.out.println("Supplier           : Not exist/set yet!");
+        }
     }
-
-    if (supplier != null) {
-        System.out.println("Supplier           : " + supplier.getName());
-    } else {
-        System.out.println("Supplier           : Not exist/set yet!");
-    }
-}
-
     
     public void changeProductName(String newName){
         System.out.println("Product name has been changed to " + newName);
