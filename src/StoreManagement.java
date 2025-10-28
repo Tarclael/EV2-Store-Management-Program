@@ -543,6 +543,29 @@ public class StoreManagement {
                     }
                     break;
                 case 6:
+                    System.out.println("\n--------- REMOVE INVENTORY --------");
+                    Inventory inventory = findInventoryById();
+
+                    if(inventory != null){
+                        System.out.println("\n-------- INVENTORY FOUND --------");
+                        inventory.showInfo();
+                        System.out.print("Remove this inventory (y/n)? ");
+                        String youSureYouWantToRemove = scanner.nextLine();
+                        switch(youSureYouWantToRemove){
+                            case "y":
+                            case "Y":
+                                inventories.remove(inventory);
+                                System.out.println("Invetory successfully removed!");
+                                break;
+                            case "n":
+                            case "N":
+                                System.out.println("Inventory removal canceled.");
+                                break;
+                            default:
+                                System.out.println("Invalid choice! Please enter 'y' or 'n'.");
+                                break;
+                        }
+                    }
                     break;
                 case 7:
                     break;
@@ -555,6 +578,15 @@ public class StoreManagement {
      */
     private static void manageSupplier(){
         int option = 0;
+            System.out.println("\n=== WAREHOUSE MANAGEMENT SYSTEM ===");
+            System.out.println("------ MANAGE SUPPLIER MENU -------");
+            System.out.println("1. See All Supplier");
+            System.out.println("3. Search by name");
+            System.out.println("4. Add Inventory");
+            System.out.println("5. Modify Inventory");
+            System.out.println("6. Remove Inventory");
+            System.out.println("7. Return to Main Menu");
+            option = validMenuOption(1, 7);
     }
 
     /*
