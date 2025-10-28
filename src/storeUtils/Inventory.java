@@ -1,6 +1,7 @@
 package storeUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 public class Inventory {
     private int inventoryId, currentCapacity;
@@ -72,12 +73,11 @@ public class Inventory {
     public void setInventoryStatus(Status status){this.status = status.name();}
     public String getInventoryStatus(){return status.toString();}    
 
-    public double getTotalValue(){
-        updateTotalValue();
-        return totalValue;
-    }
     public void updateCurrentCapacity(int addedCapacity){
         currentCapacity += addedCapacity;
+    }
+    public double getTotalValue(){
+        return totalValue;
     }
     public int getCurrentCapacity(){
         return currentCapacity;
@@ -120,16 +120,17 @@ public class Inventory {
             currentCapacity += product.getQuantity();
             totalValue += (double)product.getQuantity() * product.getPrice();
             
-            setInventoryStatus();
         }
+        setInventoryStatus();
+    }
+
+    public List<Product> getProducts(){
+        return products;
     }
     
     public void addProduct(Product product){
         products.add(product);
         updateTotalValue();
-        System.out.println("Product added to inventory " + getInventoryId());
-        System.out.print("Press 'Enter' to continue...");
-        scanner.nextLine();
     }
     
     public void removeProduct(Product product){

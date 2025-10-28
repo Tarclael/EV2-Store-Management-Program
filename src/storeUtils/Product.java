@@ -24,6 +24,10 @@ public class Product {
         this.price = price;
         this.supplier = supplier;
         this.inventory = inventory;
+
+        if(inventory != null){
+            inventory.addProduct(this);
+        }
     }
 
     public Product(String name){this.productName = name;}

@@ -22,15 +22,11 @@ public class StoreManagement {
         Employee employeeS = new Employee(102, "Amel", "Staff", 200, true);
         employees.add(employeeM);
         employees.add(employeeS);
-        Product product1 = new Product(1001, "PlayStation 5 Controller", 25, 69.99, supplier, inventory);
-        Product product2 = new Product(1002, "Nintendo Switch OLED", 10, 349.99, supplier, inventory);
-        Product product3 = new Product(1003, "Gaming Headset HyperX Cloud II", 40, 89.99, supplier, inventory);
-        products.add(product1);
-        products.add(product2);
-        products.add(product3);
+        Product product1 = new Product(1001, "PlayStation 5 Controller", 1, 69.99, supplier, inventory);
+        Product product2 = new Product(1002, "Nintendo Switch OLED", 1, 349.99, supplier, inventory);
+        Product product3 = new Product(1003, "Gaming Headset HyperX Cloud II", 1, 89.99, supplier, inventory);
 
-
-
+        
         do{
             /*
              * Main Menu
@@ -176,6 +172,7 @@ public class StoreManagement {
                         // search if inventory exist
                         if(inventory != null){
                             newProduct.setInventory(inventory);
+                            inventory.getProducts().add(newProduct);
                             inventory.updateCurrentCapacity(qty);
                         }
                         
@@ -334,6 +331,7 @@ public class StoreManagement {
                     }
                     // loop through each inventories element
                     for(Inventory inventory : inventories){
+                        inventory.updateTotalValue();
                         inventory.showInfo();
                         System.out.println();
                     }
@@ -749,9 +747,9 @@ public class StoreManagement {
 
                     for(int i = 0; i < amount; i++){
                         Employee newEmployee = new Employee();
-                        // set new supplier id
+                        // set new employee id
                         int id = validId(
-                            "Enter new supplier ID: ", 
+                            "Enter new employee ID: ", 
                             "ID must be more than 1! Please try again!", 
                             "ID is number only! Please try again!", 
                             "Inventory ID already exist! Please enter a different one!", 
@@ -811,7 +809,7 @@ public class StoreManagement {
 
                             if(employeeRole != null){
                                 System.out.print("Enter new employee position: ");
-                                employeeRole.setName(scanner.nextLine());
+                                employeeRole.setPosition(scanner.nextLine());
                             }
                             break;
                         case 3:
@@ -908,124 +906,6 @@ public class StoreManagement {
         return num;
     }
     
-    /*private static int validProductId(String question, String error1, String error2, String isExistResponse){
-        int num = 0;
-        boolean isValid;
-        do{
-            isValid = true;
-            try{
-                System.out.print(question);
-                num = scanner.nextInt();
-                if(num < 1){
-                    scanner.nextLine();
-                    System.out.println(error1);
-                    isValid = false;
-                }
-
-                for(Product existingProduct : products){
-                    if(existingProduct.getProductId() == num){
-                        System.out.println(isExistResponse);
-                        isValid = false;
-                        break;
-                    }
-                }
-            }catch(Exception e){
-                scanner.nextLine();
-                System.out.println(error2);
-                isValid = false;
-            }
-        }while(!isValid);
-        return num;
-    }*/
-
-    /*private static int validInventoryId(String question, String error1, String error2, String isExistResponse){
-        int num = 0;
-        boolean isValid;
-        do{
-            isValid = true;
-            try{
-                System.out.print(question);
-                num = scanner.nextInt();
-                if(num < 1){
-                    scanner.nextLine();
-                    System.out.println(error1);
-                    isValid = false;
-                }
-
-                for(Inventory existingInventory : inventories){
-                    if(existingInventory.getInventoryId() == num){
-                        System.out.println(isExistResponse);
-                        isValid = false;
-                        break;
-                    }
-                }
-            }catch(Exception e){
-                scanner.nextLine();
-                System.out.println(error2);
-                isValid = false;
-            }
-        }while(!isValid);
-        return num;
-    }*/
-    /*private static int validSupplierId(String question, String error1, String error2, String isExistResponse){
-        int num = 0;
-        boolean isValid;
-        do{
-            isValid = true;
-            try{
-                System.out.print(question);
-                num = scanner.nextInt();
-                if(num < 1){
-                    scanner.nextLine();
-                    System.out.println(error1);
-                    isValid = false;
-                }
-
-                for(Supplier existingSupplier : suppliers){
-                    if(existingSupplier.getSupplierId() == num){
-                        System.out.println(isExistResponse);
-                        isValid = false;
-                        break;
-                    }
-                }
-            }catch(Exception e){
-                scanner.nextLine();
-                System.out.println(error2);
-                isValid = false;
-            }
-        }while(!isValid);
-        return num;
-    }*/
-    /*private static int validInventoryId(String question, String error1, String error2, String isExistResponse){
-        int num = 0;
-        boolean isValid;
-        do{
-            isValid = true;
-            try{
-                System.out.print(question);
-                num = scanner.nextInt();
-                if(num < 1){
-                    scanner.nextLine();
-                    System.out.println(error1);
-                    isValid = false;
-                }
-
-                for(Inventory existingInventory : inventories){
-                    if(existingInventory.getInventoryId() == num){
-                        System.out.println(isExistResponse);
-                        isValid = false;
-                        break;
-                    }
-                }
-            }catch(Exception e){
-                scanner.nextLine();
-                System.out.println(error2);
-                isValid = false;
-            }
-        }while(!isValid);
-        return num;
-    }*/
-
     private static double validDecimalNumberInput(String question, String error1, String error2){
         double num = 0;
         boolean isValid;
