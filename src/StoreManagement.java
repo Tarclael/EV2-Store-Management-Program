@@ -18,10 +18,18 @@ public class StoreManagement {
         inventories.add(inventory);
         Supplier supplier = new Supplier(1, "Kaka", "Maju Jaya", "087766554433", true);
         suppliers.add(supplier);
-        Employee employeeM = new Employee(2, "Rian", "Manager", 500, true);
-        Employee employeeS = new Employee(1, "Amel", "Staff", 200, true);
+        Employee employeeM = new Employee(101, "Rian", "Manager", 500, true);
+        Employee employeeS = new Employee(102, "Amel", "Staff", 200, true);
         employees.add(employeeM);
         employees.add(employeeS);
+        Product product1 = new Product(1001, "PlayStation 5 Controller", 25, 69.99, supplier, inventory);
+        Product product2 = new Product(1002, "Nintendo Switch OLED", 10, 349.99, supplier, inventory);
+        Product product3 = new Product(1003, "Gaming Headset HyperX Cloud II", 40, 89.99, supplier, inventory);
+        products.add(product1);
+        products.add(product2);
+        products.add(product3);
+
+
 
         do{
             /*
@@ -110,7 +118,10 @@ public class StoreManagement {
                     if(productFound != null){
                         System.out.println("\n--------- PRODUCT FOUND ---------");
                         productFound.showInfo();
+                        System.out.print("Press 'Enter' to continue...");
+                        scanner.nextLine();
                     }
+                    break;
                 case 3: // add new product object
                     System.out.println("\n--------- ADD NEW PRODUCT ---------");
                     // enter amount of new product
@@ -269,22 +280,29 @@ public class StoreManagement {
                     if(product != null){
                         System.out.println("\n--------- PRODUCT FOUND ---------");
                         product.showInfo();
-                        System.out.print("Remove this product (y/n)? ");
-                        String youSureYouWantToRemove = scanner.nextLine();
-                        switch(youSureYouWantToRemove){
-                            case "y":
-                            case "Y":
-                                products.remove(product);
-                                System.out.println("Product successfully removed!");
-                                break;
-                            case "n":
-                            case "N":
-                                System.out.println("Product removal canceled.");
-                                break;
-                            default:
-                                System.out.println("Invalid choice! Please enter 'y' or 'n'.");
-                                break;
-                        }
+                        boolean isValid;
+                        do{
+                            isValid = true;
+                            System.out.print("Remove this product (y/n)? ");
+                            String youSureYouWantToRemove = scanner.nextLine();
+                            switch(youSureYouWantToRemove){
+                                case "y":
+                                case "Y":
+                                    products.remove(product);
+                                    System.out.println("Product successfully removed!");
+                                    break;
+                                case "n":
+                                case "N":
+                                    System.out.println("Product removal canceled.");
+                                    break;
+                                default:
+                                    System.out.println("Invalid choice! Please enter 'y' or 'n'.");
+                                    isValid = false;
+                                    break;
+                            }
+                        }while(!isValid);
+                        System.out.print("Press 'Enter' to continue...");
+                        scanner.nextLine();
                     }
                 break;
             }
