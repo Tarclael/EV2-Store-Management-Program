@@ -27,6 +27,7 @@ public class Inventory {
         this.location = location;
         this.maxCapacity = maxCapacity;
         this.products = new ArrayList<>();
+        setInventoryStatus();
     }
 
     /*
@@ -45,12 +46,25 @@ public class Inventory {
     public int getInventoryCapacity(){return maxCapacity;}
 
     // inventory status
+    public void setInventoryStatus(){
+        if(currentCapacity <= 10){
+            this.status = Status.Understocked.toString();
+        }else if(currentCapacity == maxCapacity){
+            this.status = Status.Full.toString();
+        }else{
+            this.status = Status.Normal.toString();
+        }
+    }
     public void setInventoryStatus(Status status){this.status = status.name();}
-    public String getInventoryStatus(){return status;}    
+    public String getInventoryStatus(){return status.toString();}    
 
     public double getTotalValue(){
         updateTotalValue();
         return totalValue;
+    }
+    public void setCurrentCapacity(int addedCapacity){
+        currentCapacity += addedCapacity;
+        
     }
 
     /*
@@ -65,12 +79,16 @@ public class Inventory {
     }
     
     public void showAllInventoryProduct(){
-        for(Product product : products){
-            product.showInfo();
-            System.out.println();
+        if(products.size() >= 1){
+            for(Product product : products){
+                product.showInfo();
+                System.out.println();
+            }
+        }else{
+            System.out.println("No product in this inventory!");
         }
         try {
-            System.out.println("Status" + getInventoryStatus());
+            System.out.println("Status = " + getInventoryStatus());
         } catch (Exception e) {
             System.out.println("Inventory status not set yet!");
             System.out.print("Press 'Enter' to continue...");
@@ -87,7 +105,7 @@ public class Inventory {
                 currentCapacity += product.getQuantity();
                 totalValue += product.getQuantity() * product.getPrice();
             }else{
-                setInventoryStatus(Status.Full);
+                setInventoryStatus();
                 System.out.println("Inventory " + getInventoryId() + " is full.");
                 System.out.print("Press 'Enter' to continue...");
                 scanner.nextLine();

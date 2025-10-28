@@ -65,7 +65,7 @@ public class Product {
         System.out.println("Price              : $" + getPrice());
         try {
             System.out.println("Inventory location : " + inventory.getInventoryLocation());
-            System.out.println("Supplier           : ");
+            System.out.println("Supplier           : " + supplier.getName());
         } catch (Exception e) {
             System.out.println("Inventory or Supplier not found!\nPlease change it in 'Modify Product', or add new inventory or supplier!");
         }

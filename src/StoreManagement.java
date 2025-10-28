@@ -11,7 +11,7 @@ public class StoreManagement {
     private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) throws Exception {
         int option = 0;
-
+        
         do{
             /*
              * Main Menu
@@ -173,6 +173,10 @@ public class StoreManagement {
                         for(Inventory existingInventory : inventories){
                             if(existingInventory.getInventoryLocation().equalsIgnoreCase(inventory)){
                                 product.setInventory(existingInventory);
+                                existingInventory.updateTotalValue();
+                                break;
+                            }else{
+                                System.out.print("Inventory location not found! Please change Inventory location in 'Modify Product' menu!");
                                 break;
                             }
                         }
@@ -201,7 +205,7 @@ public class StoreManagement {
                             System.out.println("\n-------- MODIFY PRODUCT INFO ------");
                             System.out.println("\n------------- Change Id -----------");
                             Product productId = findProductById(); // search product by id
-
+                            scanner.nextLine();
                             if(productId != null){ // if product found
                                 int newId = validProductId(
                                     "Enter new product ID: ",
@@ -216,7 +220,7 @@ public class StoreManagement {
                             System.out.println("\n-------- MODIFY PRODUCT INFO ------");
                             System.out.println("\n------------ Change Name ----------");
                             Product productName = findProductById();
-
+                            scanner.nextLine();
                             if(productName != null){
                                 System.out.print("Enter new product name: ");
                                 productName.changeProductName(scanner.nextLine());
@@ -226,7 +230,7 @@ public class StoreManagement {
                             System.out.println("\n-------- MODIFY PRODUCT INFO ------");
                             System.out.println("\n----------- Change Price ----------");
                             Product productPrice = findProductById();
-
+                            scanner.nextLine();
                             if(productPrice != null){
                                 double newPrice = validDecimalNumberInput(
                                     "Enter new product price: ",
@@ -241,7 +245,7 @@ public class StoreManagement {
                             System.out.println("\n-------- MODIFY PRODUCT INFO ------");
                             System.out.println("\n---------- Change Quantity --------");
                             Product productQuantity = findProductById();
-
+                            scanner.nextLine();
                             if(productQuantity != null){
                                 int newQty = validNumberInput(
                                     "Enter new product quantity: ",
@@ -255,7 +259,7 @@ public class StoreManagement {
                             System.out.println("\n-------- MODIFY PRODUCT INFO ------");
                             System.out.println("\n---------- Change Supplier --------");
                             Product productSupplier = findProductById();
-
+                            scanner.nextLine();
                             if(productSupplier != null){
                                 System.out.print("Enter valid product supplier name: ");
                                 String supplier = scanner.nextLine();
@@ -282,7 +286,7 @@ public class StoreManagement {
                             System.out.println("\n-------- MODIFY PRODUCT INFO ------");
                             System.out.println("\n--------- Change Inventory --------");
                             Product productInventory = findProductById();
-
+                            scanner.nextLine();
                             if(productInventory != null){
                                 System.out.print("Enter valid inventory location: ");
                                 String inventoryName = scanner.nextLine();
@@ -313,7 +317,7 @@ public class StoreManagement {
                 case 5: // remove product object
                     System.out.println("\n--------- REMOVE PRODUCT ---------");
                     Product product = findProductById();
-
+                    scanner.nextLine();
                     if(product != null){
                         System.out.println("\n--------- PRODUCT FOUND ---------");
                         product.showInfo();
@@ -348,7 +352,7 @@ public class StoreManagement {
             System.out.println("\n=== WAREHOUSE MANAGEMENT SYSTEM ===");
             System.out.println("------ MANAGE INVENTORY MENU ------");
             System.out.println("1. See All Inventories");
-            System.out.println("2. See All Inventory products");
+            System.out.println("2. See All Inventory Products");
             System.out.println("3. Search by ID");
             System.out.println("4. Add Inventory");
             System.out.println("5. Modify Inventory");
@@ -394,7 +398,7 @@ public class StoreManagement {
                         System.out.println("No inventory yet!");
                     }else{
                         Inventory inventoryFound = findInventoryById();
-    
+                        scanner.nextLine();
                         if(inventoryFound == null){ // if product object not found
                             System.out.println("Inventory not found!");
                             System.out.print("Press 'Enter' to continue...");
@@ -481,7 +485,7 @@ public class StoreManagement {
                         case 1:
                             System.out.println("\n------------- Change Id -----------");
                             Inventory inventoryId = findInventoryById(); // search inventory by id
-
+                            scanner.nextLine();
                             if(inventoryId != null){ // if inventory found
                                 int newId = validInventoryId(
                                     "Enter new inventory ID: ",
@@ -495,7 +499,7 @@ public class StoreManagement {
                         case 2:
                             System.out.println("\n---------- Change Location --------");
                             Inventory inventoryLocation = findInventoryById();
-
+                            scanner.nextLine();
                             if(inventoryLocation != null){
                                 System.out.print("Enter new location: ");
                                 inventoryLocation.setInventoryLocation(scanner.nextLine());
@@ -516,7 +520,7 @@ public class StoreManagement {
                         case 4:
                             System.out.println("\n----------- Change Status ---------");
                             Inventory inventoryStatus = findInventoryById();
-
+                            scanner.nextLine();
                             System.out.print("Change inventory status: ");
                             String status = scanner.nextLine();
                             switch(status){
@@ -545,7 +549,7 @@ public class StoreManagement {
                 case 6:
                     System.out.println("\n--------- REMOVE INVENTORY --------");
                     Inventory inventory = findInventoryById();
-
+                    scanner.nextLine();
                     if(inventory != null){
                         System.out.println("\n-------- INVENTORY FOUND --------");
                         inventory.showInfo();
@@ -578,15 +582,34 @@ public class StoreManagement {
      */
     private static void manageSupplier(){
         int option = 0;
+        do{
             System.out.println("\n=== WAREHOUSE MANAGEMENT SYSTEM ===");
             System.out.println("------ MANAGE SUPPLIER MENU -------");
             System.out.println("1. See All Supplier");
             System.out.println("3. Search by name");
-            System.out.println("4. Add Inventory");
-            System.out.println("5. Modify Inventory");
-            System.out.println("6. Remove Inventory");
+            System.out.println("4. Add Supplier");
+            System.out.println("5. Modify Supplier");
+            System.out.println("6. Remove Supplier");
             System.out.println("7. Return to Main Menu");
             option = validMenuOption(1, 7);
+
+            switch(option){
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+            }
+        }while(option != 7);
     }
 
     /*
