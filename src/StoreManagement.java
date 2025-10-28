@@ -13,8 +13,16 @@ public class StoreManagement {
     private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) throws Exception {
         int option = 0;
+        // initial objects
         Inventory inventory = new Inventory(1, "east");
         inventories.add(inventory);
+        Supplier supplier = new Supplier(1, "Kaka", "Maju Jaya", "087766554433", true);
+        suppliers.add(supplier);
+        Employee employeeM = new Employee(2, "Rian", "Manager", 500, true);
+        Employee employeeS = new Employee(1, "Amel", "Staff", 200, true);
+        employees.add(employeeM);
+        employees.add(employeeS);
+
         do{
             /*
              * Main Menu
