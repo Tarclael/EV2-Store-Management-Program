@@ -172,7 +172,7 @@ public class StoreManagement {
                         // search if inventory exist
                         if(inventory != null){
                             newProduct.setInventory(inventory);
-                            inventory.getProducts().add(newProduct);
+                            //inventory.getProducts().add(newProduct);
                             inventory.updateCurrentCapacity(qty);
                         }
                         

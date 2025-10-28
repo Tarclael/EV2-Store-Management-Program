@@ -56,7 +56,10 @@ public class Product {
     public Supplier getSupplier(){return supplier;}
 
     // product inventory location
-    public void setInventory(Inventory inventory){this.inventory = inventory;}
+    public void setInventory(Inventory inventory){
+        this.inventory = inventory;
+        inventory.addProduct(this);
+    }
     public Inventory getInventory(){return inventory;}
 
     /*
